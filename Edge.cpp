@@ -37,8 +37,8 @@ void Edge::insert(const std::string& vertex, unsigned long distance){
     return;
 }
 
-/* Allows callers to identify a source-vertex and retrieve any mapped
-   neighbor/distance pairs.                                           */
+/* Allows caller to specify a source-vertex and retrieve all of its
+   neighbor/distance pairs. Returns an Edge object reference.       */
 const std::map<std::string, unsigned long>& Edge::get_neighbors() const{
     return neighbors;
 }
@@ -60,4 +60,5 @@ void Edge::remove_neighbor(const std::string& target){
 void Edge::clear(){
     neighbors.clear();
     return;
+
 }
