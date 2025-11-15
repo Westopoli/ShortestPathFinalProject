@@ -25,7 +25,7 @@ public:
     Edge();   // Default constructor included to fulfill course requirements
     ~Edge();  // Default destructor included to fulfill course requirements. Calls clear()
     void insert(const std::string& vertex, unsigned long distance);       // Adds one neighbor/distance pair at a time
-    const std::map<std::string, unsigned long>& get_neighbors() const;    // Returns address of a specific vertex's neighbors (Edge object)
+    const std::map<std::string, unsigned long>& get_neighbors() const;    // Returns address of a specific vertex's neighbors (Edge object reference)
     int get_size() const;   // Returns the number of neighbors
     void remove_neighbor(const std::string& target);    // Called by wrapper class Graph
     void clear();   // Clears map of all elements (neighbors)
@@ -36,3 +36,4 @@ private:
 
 
 #endif
+
