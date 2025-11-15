@@ -44,17 +44,18 @@ public:
     Graph(); // Default constructor included to fulfill course requirements
     ~Graph(); // Default destructor included to fulfill course requirements. Calls clear()
     void addVertex(const std::string& label); // Checks for duplicates before adding a vertex
-    void removeVertex(std::string label); // Removes all source and neighbor vertex instances
-    void addEdge(std::string label1, std::string label2, unsigned long weight); // Observes project guidelines, then adds edge 
-    void removeEdge(std::string label1, std::string label2); // Removes an undirected edge. Not called in this Dijkstra algorithm implementation however
+    void removeVertex(std::string label); // Removes all instances of a vertex, whether it is a source or neighbor vertex
+    void addEdge(std::string label1, std::string label2, unsigned long weight); // Observes project guidelines, then adds and undirected edge 
+    void removeEdge(std::string label1, std::string label2); // Removes an undirected edge. Not called in this Dijkstra algorithm implementation, however
     unsigned long shortestPath(std::string startLabel, std::string endLabel, std::vector<std::string> &path); // Dijkstra's algorithm, calls reconstruct()
-    void clear(); // Indirect call to STL map.clear()
+    void clear(); // Clears map of all elements (all instances of all vertices)
 
-protected:  // Rebuilds shortest vector path from start to end
+protected:  // Helper function, rebuilds shortest vector path from start to end
     void reconstruct(std::vector<std::string> &fnlPath, const std::map<std::string, std::string>& fnlEdges, const std::string& start, const std::string& end); 
 
 private:
     std::map<std::string, Edge> adjacencyList;
 };
+
 
 #endif
