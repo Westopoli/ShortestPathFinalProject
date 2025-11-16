@@ -35,6 +35,7 @@
 #include <string>
 #include <stdexcept>
 #include <map>
+#include <climits>
 #include <algorithm>
 
 /* Defined solely for course requirement. */
@@ -215,4 +216,5 @@ void Graph::clear(){
     return;
 
 }
+
 
