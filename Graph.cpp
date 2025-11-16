@@ -156,6 +156,7 @@ unsigned long Graph::shortestPath(const std::string& startLabel, const std::stri
             return currDistance;                                 // ...and return the value
         }
         pQueue.pop();   // Node whose neighbors will be explored is no longer needed
+        if(currDistance != shortestDistance[currLabel]) continue; // IS THIS WHAT YOU MEANT!?!?!?!?!?!?!?!?!?!?!?
 
         // Now we refer back to the immutable adjacency list
         auto& neighborMap = adjacencyList.at(currLabel).get_neighbors(); // [b] Get the current Vertex node's neighbors
@@ -179,12 +180,12 @@ void Graph::reconstruct(std::vector<std::string> &fnlPath, const std::map<std::s
     if(start.empty() || end.empty()){
         throw std::runtime_error("[ERROR] Start and or edge vertex contains invalid data. Unable to complete request");
     }    
-    if(fnlEdges.find(end) == fnlEdges.end()){
-        throw std::runtime_error("[ERROR] End vertex does not exist. Unable to complete request.");
-    }
     if(start == end){   // For one-vertex circular path
         fnlPath.push_back(start);
         return;
+    }
+    if(fnlEdges.find(end) == fnlEdges.end()){
+        throw std::runtime_error("[ERROR] End vertex does not exist. Unable to complete request.");
     }
     
     fnlPath.push_back(end); // Load end vertex first
@@ -214,3 +215,4 @@ void Graph::clear(){
     return;
 
 }
+
