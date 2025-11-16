@@ -107,7 +107,7 @@ void Graph::removeEdge(std::string label1, std::string label2){
         throw std::runtime_error("[ERROR] One or more specified vertex does not exist. Unable to complete request.");
     }
     // [b] Confirm that there is an edge between both vertices
-    auto& label1Edges = adjacencyList.at(label1).get_neighbors();
+    const auto& label1Edges = adjacencyList.at(label1).get_neighbors();
     if(label1Edges.find(label2) == label1Edges.end()){
         throw std::runtime_error("[ERROR] No edge exists between specified vertices. Unable to complete request.");
     }
@@ -152,12 +152,16 @@ unsigned long Graph::shortestPath(const std::string& startLabel, const std::stri
     while(!pQueue.empty()){     // Safe pQueue-state guard
         unsigned long currDistance = pQueue.top().get_distance();    // Obtain distance...
         std::string currLabel = pQueue.top().get_label();            // ...and label from first Vertex node in queue
+        pQueue.pop();   // Node whose neighbors will be explored is no longer needed
+        if(currDistance != shortestDistance[currLabel]){  // If this is not the correct shortest distance...
+            continue;                                     // ...disregard, and process another node
+        }
+        
         if(currLabel == endLabel){                               // [e] If shortest path from startLabel to endLabel is found...
             reconstruct(path, prevVertex, startLabel, endLabel); // ...reconstruct the vertex-to-vertex path...
             return currDistance;                                 // ...and return the value
         }
-        pQueue.pop();   // Node whose neighbors will be explored is no longer needed
-        if(currDistance != shortestDistance[currLabel]) continue; // IS THIS WHAT YOU MEANT!?!?!?!?!?!?!?!?!?!?!?
+        
 
         // Now we refer back to the immutable adjacency list
         auto& neighborMap = adjacencyList.at(currLabel).get_neighbors(); // [b] Get the current Vertex node's neighbors
@@ -216,5 +220,6 @@ void Graph::clear(){
     return;
 
 }
+
 
 
