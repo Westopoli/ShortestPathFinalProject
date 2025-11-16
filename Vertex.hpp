@@ -29,11 +29,12 @@ public:
 
 protected:
    void set_distance(unsigned long dist);   // Serves as helper for custom Vertex()
-   void set_label(std::string& lbl);  // Serves as helper for custom Vertex()
+   void set_label(const std::string& lbl);  // Serves as helper for custom Vertex()
 
 private:
    unsigned long distance = 0;     // Key
    std::string label = "";   // Value      
 };
+
 
 #endif
