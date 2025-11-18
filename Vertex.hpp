@@ -2,15 +2,15 @@
    **********************************************************
                Project 4 Dijkstra's Algorithm
    **********************************************************
-   This source file defines a class of (key/value) pairs
+   This header file declares a class of (key/value) pairs
    which represent (distance/vertex label). The pair will
    hold the current shortest distance from startLabel in the
    implementation shortestPath() in class Graph. The Vertex
    class is to be used with the min-heap priority queue
    implemented by class PQueue which will always keep the
-   shortest distance from startLabel at the top of the queue.
-   Also provided are overloads for operators "<" and ">"
-   which simplify sort logic in PQueue.                       */
+   shortest known distance from startLabel at the top of the
+   queue. Also provided are overloads for operators "<" and
+   ">" which simplify sort logic in PQueue.                   */
 
 #ifndef VERTEX_HPP
 #define VERTEX_HPP
@@ -38,3 +38,4 @@ private:
 
 
 #endif
+
