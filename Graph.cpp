@@ -52,7 +52,7 @@ Graph::~Graph(){
 /* Function adds a new vertex after checking for duplicates. */
 void Graph::addVertex(const std::string& label){
     if(adjacencyList.find(label) != adjacencyList.end()){
-        throw std::runtime_error("[ERROR] Specified vertex has already been added. Unable to complete request.");
+        throw std::logic_error("[ERROR] Specified vertex has already been added. Unable to complete request.");
     }
     adjacencyList.insert({label, Edge()});  // Insert a new (source vector/neighbor map) pair. Neighbor map defaulted as empty
 
@@ -64,7 +64,7 @@ void Graph::addVertex(const std::string& label){
    neighbor, then of the vertex as a source.            */
 void Graph::removeVertex(std::string label){
     if(adjacencyList.find(label) == adjacencyList.end()){
-        throw std::runtime_error("[ERROR] Specified vertex not found in adjacency list. Unable to complete request.");
+        throw std::invalid_argument("[ERROR] Specified vertex not found in adjacency list. Unable to complete request.");
     }
     for(auto it = adjacencyList.begin(); it != adjacencyList.end(); ++it){ // Traverse all source vertices in the adjacency list...
         it->second.remove_neighbor(label);                                 // ...and remove any instance of the vertex as a neighbor
@@ -81,13 +81,13 @@ void Graph::removeVertex(std::string label){
    Once [a]-[c] are confirmed, an undirected edge is declared.                          */
 void Graph::addEdge(std::string label1, std::string label2, unsigned long weight){
     if(label1 == label2){   // [a] No self-loops
-        throw std::runtime_error("[ERROR] Program does not support self-loop condition. Unable to complete request.");
+        throw std::invalid_argument("[ERROR] Program does not support self-loop condition. Unable to complete request.");
     }
     if(adjacencyList.find(label1) == adjacencyList.end() || adjacencyList.find(label2) == adjacencyList.end()){ // [b] Both are source vertices
-        throw std::runtime_error("[ERROR] One or more specified vertex does not exist. Unable to complete request.");
+        throw std::invalid_argument("[ERROR] One or more specified vertex does not exist. Unable to complete request.");
     }
     if(adjacencyList.at(label1).get_neighbors().find(label2) != adjacencyList.at(label1).get_neighbors().end()){ // [c] No duplicate edges
-        throw std::runtime_error("[ERROR] Specified edge already exists. Unable to complete request.");
+        throw std::logic_error("[ERROR] Specified edge already exists. Unable to complete request.");
     }
 
     adjacencyList.at(label1).insert(label2, weight);   // Undirected edges...
@@ -104,12 +104,12 @@ void Graph::addEdge(std::string label1, std::string label2, unsigned long weight
 void Graph::removeEdge(std::string label1, std::string label2){
     // [a] Confirm that both vertices exist
     if(adjacencyList.find(label1) == adjacencyList.end() || adjacencyList.find(label2) == adjacencyList.end()){
-        throw std::runtime_error("[ERROR] One or more specified vertex does not exist. Unable to complete request.");
+        throw std::invalid_argument("[ERROR] One or more specified vertex does not exist. Unable to complete request.");
     }
     // [b] Confirm that there is an edge between both vertices
     const auto& label1Edges = adjacencyList.at(label1).get_neighbors();
     if(label1Edges.find(label2) == label1Edges.end()){
-        throw std::runtime_error("[ERROR] No edge exists between specified vertices. Unable to complete request.");
+        throw std::logic_error("[ERROR] No edge exists between specified vertices. Unable to complete request.");
     }
     // If [a] and [b] are confirmed, remove applicable neighbor of both vertices
     adjacencyList.at(label1).remove_neighbor(label2);
@@ -126,10 +126,9 @@ void Graph::removeEdge(std::string label1, std::string label2){
    currLabel == endLabel. With this confirmation, the shortest path from start to end is identified, and both the total
    distance and vertex-by-vertex path are made available to the caller.                                                 */
 unsigned long Graph::shortestPath(const std::string& startLabel, const std::string& endLabel, std::vector<std::string> &path){
-    // [a]-[b]
     // Ensure that the adjacency list contains the correct vertices to process
     if(adjacencyList.find(startLabel) == adjacencyList.end() || adjacencyList.find(endLabel) == adjacencyList.end()){
-        throw std::runtime_error("[ERROR] One or more specified vertex does not exist. Unable to complete request.");
+        throw std::invalid_argument("[ERROR] One or more specified vertex does not exist. Unable to complete request.");
     }
 
     std::map<std::string, std::string> prevVertex;          // Tracks tentative vertex-to-vertex path
@@ -176,28 +175,33 @@ unsigned long Graph::shortestPath(const std::string& startLabel, const std::stri
             }
         }
     }
-    return ULONG_MAX;   // Should the algorithm fail to locate any path from startLabel to endLabel
-
+    
+    throw std::logic_error("No path exists between the start and end vertices");  // Throw if no path is found
 }
 
+/* This function reconstructs the shortest path by referring to elements in a map declared and filled in shortestPath(). Each map element consists of a 
+   (string, string) pair. Any given pair represents two neighbor vertices which form an edge and are part of the total shortest path. Beginning with end
+   (last vertex in path), logic calls push_back(), one vertex (key) at a time, to vector fnlPath. To determine which vertex to visit next, logic refers
+   to the neighbor (value) of the vertex (key) which was just "pushed_back". Logic stops when the visited vertex == start, then start is "pushed_back".
+   After this point, the passed vector fnlPath is simply reversed so that vector[0] == start and vector[size-1] == end.*/
 void Graph::reconstruct(std::vector<std::string> &fnlPath, const std::map<std::string, std::string>& fnlEdges, const std::string& start, const std::string& end){
-    // The follow three cases avoid unnecessary logic
+    // The following three cases avoid unnecessary logic
     if(start.empty() || end.empty()){
-        throw std::runtime_error("[ERROR] Start and or edge vertex contains invalid data. Unable to complete request");
+        throw std::invalid_argument("[ERROR] Start and/or edge vertex contains invalid data. Unable to complete request");
     }    
     if(start == end){   // For one-vertex circular path
         fnlPath.push_back(start);
         return;
     }
     if(fnlEdges.find(end) == fnlEdges.end()){
-        throw std::runtime_error("[ERROR] End vertex does not exist. Unable to complete request.");
+        throw std::invalid_argument("[ERROR] End vertex does not exist. Unable to complete request.");
     }
     
     fnlPath.push_back(end); // Load end vertex first
     std::string curr = fnlEdges[end];
     while(curr != start){
-        if(fnlEdges.find(curr) == fnlEdges.end()){  // The last case to inspect is a broken path from potentially corrupted data
-            throw std::runtime_error("[ERROR] Break in vertex path detected. Unable to complete request.");
+        if(fnlEdges.find(curr) == fnlEdges.end()){  // The fourth/last case to inspect is a broken path from potentially corrupted data
+            throw std::logic_error("[ERROR] Break in vertex path detected. Unable to complete request.");
         }
         fnlPath.push_back(curr);    // Load current vertex...
         curr = fnlEdges[curr];      // ...and iterate to 
@@ -220,6 +224,7 @@ void Graph::clear(){
     return;
 
 }
+
 
 
 
