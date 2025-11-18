@@ -8,12 +8,11 @@
    instantiated, a relationship will exist between that
    object's identifier and each of its neighbor key/value
    pairs. Effectively, class Edge supplies a list of all
-   available neighbor vertices for any specified vertex will
-   be supplied, as well as the distance between the
-   source-vertex and destination-vertex.
-   For example: map A = {(B, 5), (C, 7)} implies that
-   source-vertex A has neighbors B and C, whose edges are a
-   length of 5units and 7units respectively.                 */
+   available neighbor vertices for any specified vertex, as
+   well as the distance between the source-vertex and a
+   destination-vertex. For example: map A = {(B, 5), (C, 7)}
+   implies that source-vertex A has neighbors B and C, whose
+   edges are a length of 5units and 7units respectively.      */
 
 #include "Edge.hpp"
 
@@ -62,4 +61,5 @@ void Edge::clear(){
     return;
 
 }
+
 
