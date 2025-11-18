@@ -24,7 +24,8 @@ PQueue::PQueue(){
     // No logical implementation required
 }
 
-/* Redundant, but satisfies course requirement. */
+/* Redundant, but satisfies course requirement.
+   Abstracts STL vector clear().                */
 PQueue::~PQueue(){
     heapQueue.clear();
 }
@@ -48,7 +49,7 @@ void PQueue::pop(){
     if(heapQueue.empty()){  // Data security check
         throw std::runtime_error("[ERROR]: Queue is empty. Unable to complete request.");
     }
-    heapQueue[0] = heapQueue.back();    // If only one element what enqueued...
+    heapQueue[0] = heapQueue.back();    // If only one element was enqueued...
     heapQueue.pop_back();               // ...this is all that is needed
     if(heapQueue.empty()){
         return;
@@ -80,7 +81,9 @@ bool PQueue::empty() const{
     return heapQueue.empty();
 }
 
-/* Calls STL vector function clear() to deallocate priority queue. */
+/* Calls STL vector function clear() to deallocate priority queue.
+   Although STL vector.size() may exceed int range, main() will restrict
+   the number of neighbors to stay within int bounds.                 */
 void PQueue::clear(){
     heapQueue.clear();
 
@@ -104,7 +107,8 @@ int PQueue::find_right(int parent){
 
 /* Helpers used to condense logic. Function
    examines last node and moves it higher
-   in the priority queue as needed.         */
+   in the priority queue as needed. Utilizes
+   Vertex::operator>() for comparisons.      */
 void PQueue::bubble_up(int child){
     int parent = find_parent(child);
     while(child != 0 && parent >= 0 && heapQueue[parent] > heapQueue[child]){  // Use custom operator>() from class Vertex
@@ -113,13 +117,13 @@ void PQueue::bubble_up(int child){
         parent = find_parent(child);
     }
     
-
     return;
 }
 
 /* Helpers used to condense logic. Recursive
    function examines first node and moves it
-   lower in the priority queue as needed.    */
+   lower in the priority queue as needed.
+   Utilizes Vertex::operator<() for comparisons. */
 void PQueue::bubble_down(int parent){
     int childL = find_left(parent);
     int childR = find_right(parent);
@@ -145,7 +149,7 @@ void PQueue::bubble_down(int parent){
     return;
 }
 
-/* Used to condense logic for swapping nodes. */
+/* Swaps two nodes in the vector-base heap. */
 void PQueue::swap(int i, int j){
     Vertex temp = heapQueue[i];
     heapQueue[i] = heapQueue[j];
@@ -153,3 +157,4 @@ void PQueue::swap(int i, int j){
 
     return;
 }
+
