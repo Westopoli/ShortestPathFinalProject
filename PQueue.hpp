@@ -2,7 +2,7 @@
    **********************************************************
                Project 4 Dijkstra's Algorithm
    **********************************************************
-   This source file defines a min-priority queue class which
+   This header file declares a min-priority queue class which
    uses heap principles to sort key-value (distance-vertex)
    pairs in ascending order of key. Each PQueue element
    (pair) is a Vertex object. The intended use of
@@ -12,8 +12,7 @@
    of the most recently viewed vertex and pursue the next
    step in the shortest path to the target. Once Dijkstra's
    algorithm is complete, the top PQueue element should
-   represent the last vertex in the shortest path from start
-   to end.                                                    */
+   contain the shortest total distance to the target vertex.  */
 
 #ifndef PQUEUE_HPP
 #define PQUEUE_HPP
@@ -46,4 +45,5 @@ private:
 };
 
 #endif
+
 
