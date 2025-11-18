@@ -12,7 +12,8 @@
    of the most recently viewed vertex and pursue the next
    step in the shortest path to the target. Once Dijkstra's
    algorithm is complete, the top PQueue element should
-   contain the shortest total distance to the target vertex.  */
+   represent the last vertex in the shortest path from start
+   to end.                                                    */
 
 #ifndef PQUEUE_HPP
 #define PQUEUE_HPP
@@ -24,13 +25,13 @@
 class PQueue {
 public:
     PQueue();   // Default constructor included to fulfill course requirements
-    ~PQueue();  // Default destructor included to fulfill course requirements.
+    ~PQueue();  // Default destructor included to fulfill course requirements. Calls clear()
     void push(const Vertex& newNode);  // Inserts new element and calls bubble_up()
     void pop(); // Removes first element, maintaining heap property with STL vector functions. Calls bubble_down()
     const Vertex& top() const;  // Returns first element in queue
     int get_size() const;   // Not needed for the bounds of this assignment, but added for light modularity
     bool empty() const; // Helper function, used in multiple member functions
-    void clear();
+    void clear();  // Helper function, uses STL vector clear
 
 protected:
     int find_parent(int indexChild);         // Helper function, encapsulates redundant logic
@@ -45,3 +46,4 @@ private:
 };
 
 #endif
+
