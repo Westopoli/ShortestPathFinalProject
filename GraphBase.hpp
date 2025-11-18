@@ -4,7 +4,7 @@
    **********************************************************
    This header file declares a base class for custom graph
    class. Each graph element consists of (source-vertex, map
-   of eighbor-vertices/distances from source-vertex). The
+   of neighbor-vertices/distances from source-vertex). The
    pair above is encapsulated by (std::string, class Edge)
    and represents an adjacency list for immutable reference
    in the algorithm.
@@ -47,3 +47,4 @@ public:
 };
 
 #endif
+
