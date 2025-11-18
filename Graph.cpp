@@ -65,7 +65,7 @@ void Graph::addVertex(const std::string& label){
 /* Function removes all instances of the target vertex.
    This includes removing instances of the vertex as a
    neighbor, then of the vertex as a source.            */
-void Graph::removeVertex(std::string label){
+void Graph::removeVertex(std::string& label){
     if(adjacencyList.find(label) == adjacencyList.end()){
         throw std::invalid_argument("[ERROR] Specified vertex not found in adjacency list. Unable to complete request.");
     }
@@ -124,7 +124,7 @@ void Graph::removeEdge(std::string label1, std::string label2){
 
 /* This function implements Dijkstra's algorithm. The algorithm works "backwards," tracking the distance from each
    vertex back to the startLabel. While doing so, indirect paths between vertices which are shorter than those stored
-   in adjacencyList may be disovered. If so, the shorter distance will be stored in the updateable map shortestDistance.
+   in adjacencyList may be discovered. If so, the shorter distance will be stored in the updateable map shortestDistance.
    As shortestDistance maintains the shortest path from currLabel to startLabel, the algorithm looks to confirm that
    currLabel == endLabel. With this confirmation, the shortest path from start to end is identified, and both the total
    distance and vertex-by-vertex path are made available to the caller.                                                 */
@@ -166,7 +166,7 @@ unsigned long Graph::shortestPath(const std::string& startLabel, const std::stri
         
 
         // Now we refer back to the immutable adjacency list
-        auto& neighborMap = adjacencyList.at(currLabel).get_neighbors(); // [b] Get the current Vertex node's neighbors
+        const auto& neighborMap = adjacencyList.at(currLabel).get_neighbors(); // [b] Get the current Vertex node's neighbors
         for(auto it = neighborMap.begin(); it != neighborMap.end(); ++it){  // Iterate through the neighbors
             unsigned long testD = it->second + currDistance;            // The neighbor-current distance we plan to test...
             unsigned long shortestD = shortestDistance.at(it->first);      // ...against neighbor-startLabel distance we are unsure of
@@ -179,7 +179,7 @@ unsigned long Graph::shortestPath(const std::string& startLabel, const std::stri
         }
     }
     
-    throw std::logic_error("No path exists between the start and end vertices");  // Throw if no path is found
+    throw std::logic_error("[ERROR] No path exists between the start and end vertices");  // Throw if no path is found
 }
 
 /* This function reconstructs the shortest path by referring to elements in a map declared and filled in shortestPath(). Each map element consists of a 
@@ -227,6 +227,7 @@ void Graph::clear(){
     return;
 
 }
+
 
 
 
