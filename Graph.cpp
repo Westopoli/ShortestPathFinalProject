@@ -13,11 +13,14 @@
    encapsulation of (neighbor-vertices, distances from
    source-vertex).
    
-   The adjacency list is implemented as a map from
-   source-vertex to a map of neighbor-vertices and distances.
-   The adjacency list supplies the necessary data and
-   functions to implement Dijkstra's algorithm.
-   
+   The adjacency list is implemented in a map-of-maps
+   manner because it allows for two
+   benefits. With this implementation of Dijkstra's 
+   algorithm, enforcement of "no duplicates" is made simpler
+   by STL map functions. Also, because the look-up time for a
+   map element is less than that of a vector, a map is the
+   preferred sub-ADT for this algorithm.
+      
    Details on the algorithm's implementation are provided
    below in shortestPath(), but the design operates by
    working from the start-vertex, examining the path to each
@@ -224,6 +227,7 @@ void Graph::clear(){
     return;
 
 }
+
 
 
 
