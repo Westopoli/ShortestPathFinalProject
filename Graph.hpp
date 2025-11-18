@@ -54,7 +54,7 @@ public:
     void clear(); // Clears map of all elements (all instances of all vertices)
 
 protected:  // Helper function, rebuilds shortest vector path from start to end
-    void reconstruct(std::vector<std::string&> &fnlPath, const std::map<std::string, std::string>& fnlEdges, const std::string& start, const std::string& end); 
+    void reconstruct(std::vector<std::string> &fnlPath, const std::map<std::string, std::string>& fnlEdges, const std::string& start, const std::string& end); 
 
 private:
     std::map<std::string, Edge> adjacencyList;
@@ -62,6 +62,7 @@ private:
 
 
 #endif
+
 
 
 
