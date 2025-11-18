@@ -14,11 +14,11 @@
    source-vertex).
    
    The adjacency list is implemented in a map-of-maps
-   manner because it allows for two
-   benefits. With this implementation of Dijkstra's 
-   algorithm, enforcement of "no duplicates" is made simpler
-   by STL map functions. Also, because the look-up time for a
-   map element is less than that of a vector, a map is the
+   manner, using STL map, because it provides two benefits.
+   With this implementation of Dijkstra's algorithm,
+   enforcement of "no duplicates" is made simpler by STL map
+   functions. Also, because the look-up time for a map
+   element is less than that of a vector, a map is the
    preferred sub-ADT for this algorithm.
       
    Details on the algorithm's implementation are provided
@@ -227,6 +227,7 @@ void Graph::clear(){
     return;
 
 }
+
 
 
 
