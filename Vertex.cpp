@@ -8,9 +8,9 @@
    implementation shortestPath() in class Graph. The Vertex
    class is to be used with the min-heap priority queue
    implemented by class PQueue which will always keep the
-   shortest distance from startLabel at the top of the queue.
-   Also provided are overloads for operators "<" and ">"
-   which simplify sort logic in PQueue.                       */
+   shortest known distance from startLabel at the top of the
+   queue. Also provided are overloads for operators "<" and
+   ">" which simplify sort logic in PQueue.                   */
 
 #include "Vertex.hpp"
 
@@ -43,7 +43,7 @@ bool Vertex::operator>(const Vertex& other) const{
 }
 
 void Vertex::set_distance(unsigned long dist){
-   distance = dist;
+   this->distance = dist;
 }
 
 void Vertex::set_label(const std::string& lbl){
@@ -59,3 +59,4 @@ unsigned long Vertex::get_distance() const{
 std::string Vertex::get_label() const{
    return label;
 }
+
