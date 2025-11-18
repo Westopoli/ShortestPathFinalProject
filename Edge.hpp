@@ -2,17 +2,17 @@
    **********************************************************
                Project 4 Dijkstra's Algorithm
    **********************************************************
-   This source file defines a class which uses STL map to
+   This header file declares a class which uses STL map to
    store a collection of destination/distance (key/value)
    pairs. The intent is that for every Edge object
    instantiated, a relationship will exist between that
    object's identifier and each of its neighbor key/value
-   pairs. Effectively, a list of all available neighbor
-   vertices for any specified vertex will be supplied, as well
-   as the distance between the source-vertex and destination-
-   vertex. For example: map A = {(B, 5), (C, 7)} implies that
-   source-vertex A has neighbors B and C, whose edges are a
-   length of 5u and 7u respectively.                           */
+   pairs. Effectively, class Edge supplies a list of all
+   available neighbor vertices for any specified vertex, as
+   well as the distance between the source-vertex and a
+   destination-vertex. For example: map A = {(B, 5), (C, 7)}
+   implies that source-vertex A has neighbors B and C, whose
+   edges are a length of 5units and 7units respectively.      */
 
 #ifndef EDGE_HPP
 #define EDGE_HPP
@@ -36,4 +36,5 @@ private:
 
 
 #endif
+
 
