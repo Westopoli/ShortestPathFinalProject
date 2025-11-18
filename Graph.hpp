@@ -48,7 +48,7 @@ public:
     ~Graph(); // Default destructor included to fulfill course requirements. Calls clear()
     void addVertex(const std::string& label); // Checks for duplicates before adding a vertex
     void removeVertex(std::string& label); // Removes all instances of a vertex, whether it is a source or neighbor vertex
-    void addEdge(std::string label1, std::string label2, unsigned long weight); // Observes project guidelines, then adds and undirected edge 
+    void addEdge(std::string label1, std::string label2, unsigned long weight); // Observes project guidelines, then adds an undirected edge 
     void removeEdge(std::string label1, std::string label2); // Removes an undirected edge. Not called in this Dijkstra algorithm implementation, however
     unsigned long shortestPath(std::string startLabel, std::string endLabel, std::vector<std::string> &path); // Dijkstra's algorithm, calls reconstruct()
     void clear(); // Clears map of all elements (all instances of all vertices)
@@ -62,4 +62,5 @@ private:
 
 
 #endif
+
 
